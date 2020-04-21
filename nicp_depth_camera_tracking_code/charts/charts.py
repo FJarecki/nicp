@@ -109,7 +109,7 @@ class cPlotDataset(object):
                 #plt.show()
                 print(os.path.join('results',data_name))
                 fig.suptitle('Error in dataset: ' + data_name, y=1.05)
-                fig.savefig(os.path.join('results',data_name),format='jpg', bbox_inches="tight",dpi=300)
+                fig.savefig(os.path.join('results',data_name), bbox_inches="tight",dpi=300)
             except:
                 print('Falsed')
                     
