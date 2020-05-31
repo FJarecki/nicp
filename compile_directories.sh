@@ -1,5 +1,11 @@
 #!/bin/sh
 
+######################
+#######OUTDATED#######
+######################
+
+<< 'MULTILINE-COMMENT'
+
 cd nicp
 text=$(pwd)
 mkdir build
@@ -24,3 +30,5 @@ mkdir build
 cd build
 cmake ..
 make
+
+MULTILINE-COMMENT

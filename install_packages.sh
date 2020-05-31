@@ -16,5 +16,9 @@ pip install numpy
 pip install scipy
 pip install opencv-python
 pip install quaternion
+pip install glob
 
 pip3 install numpy
+pip3 install scipy
+pip3 install glob
+pip3 install open3d

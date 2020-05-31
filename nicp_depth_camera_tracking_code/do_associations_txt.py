@@ -70,7 +70,12 @@ def associations_txt_creation(): #Tworzenie associations.txt
     depth_names.sort()
     timestamp_list = []
     for line in open("groundtruth.txt"):
-        timestamp_list.append(line[0:13])
+        iter = 0
+        for i in range(len(line)):
+            if line[i] == ' ':
+                iter = i
+                break
+        timestamp_list.append(line[0:iter])
     assoc_file = open("associations.txt","w")#write mode 
     for iter in range(len(rgb_names)):
         assoc_file.write(timestamp_list[iter] + " " + str(depth_names[iter]) + " " + timestamp_list[iter] + " " + str(rgb_names[iter]) + " \n") 
@@ -185,84 +190,6 @@ def calculate_distance():
     print(distance)
 
 compare_euclidian_distance("seq7")
+#associations_txt_creation()
 
 print("Done!")
-
-
-
-
-#Porownanie odleglosci euklidesowych
-
-
-'''
-rot_mat = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
-print(rot_mat)
-r = R.from_matrix(rot_mat)    
-print(r.as_quat())
-print(r.as_quat()[0])
-q = np.quaternion(1, 0, 0 ,0)
-print(q)
-rot_matrix = quaternion.as_rotation_matrix(q)
-print(rot_matrix)
-'''
-
-'''[[1 0 0]
- [0 1 0]
- [0 0 1]]
-[0. 0. 0. 1.]
-0.0
-quaternion(1, 0, 0, 0)
-[[1. 0. 0.]
- [0. 1. 0.]
- [0. 0. 1.]]'''
-
-
-
-'''
-#Obrocenie ukladu wspolrzednych
-def parseQuatAndPoseToTransformationMatrix(position_vector, orientation_quaternion):
-    rot_matrix = quaternion.as_rotation_matrix(orientation_quaternion)
-    transformation_matrix=np.eye(4)
-    transformation_matrix[0:3,0:3]=rot_matrix
-    transformation_matrix[0:3,3]=position_vector
-    return transformation_matrix
-
-png_filenames = [img for img in glob.glob('rgb/*')]
-png_filenames.sort()
-
-depth_filenames = [img for img in glob.glob('depth/*')]
-depth_filenames.sort()
-
-groundtruth_matrix = []
-first_el = True
-
-for line in open("groundtruth.txt"):
-    el_list = []
-    line_iter = 0
-    for i in range(len(line)):
-        if line[i] == " ":
-            if first_el:
-                el_list.append(line[line_iter:i])
-            else:
-                el_list.append(line[line_iter+1:i])
-                first_el = False
-            line_iter = i
-        if i == len(line) - 1:
-            el_list.append(line[line_iter+1:i])
-    groundtruth_matrix.append(el_list)
-    
-
-camera_to_AHRS = parseQuatAndPoseToTransformationMatrix([0, 0, 0], np.quaternion(-0.4977, -0.49552, 0.52916, -0.47618))
-AHRS_to_camera = np.linalg.inv(camera_to_AHRS)
-new_groundtrouth_file = open("new_groundtrouth.txt","w")#write mode 
-for i in groundtruth_matrix:
-    transformation_matrix = parseQuatAndPoseToTransformationMatrix(i[1:4], np.quaternion(float(i[4]), float(i[5]), float(i[6]), float(i[7])))
-    trans = np.dot(transformation_matrix, camera_to_AHRS)
-    r = R.from_matrix(trans[0:3, 0:3])    
-    new_groundtrouth_file.write(i[0] + " " + str(trans[0][3]) + " " + str(trans[1][3]) + " " + str(trans[2][3]) + 
-                                " " + str(r.as_quat()[0]) + " " + str(r.as_quat()[1]) + " " + str(r.as_quat()[2]) +
-                                " " + str(r.as_quat()[3]) + "\n")  
-  
-
-new_groundtrouth_file.close()
-'''
